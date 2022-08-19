@@ -9,6 +9,7 @@ const AntSelect = (ComponentName) => styled(ComponentName)`
     position: relative;
     color: ${palette('text', 1)};
     font-size: 13px;
+    width: 100%;
 
     /* input {
       height: 35px;

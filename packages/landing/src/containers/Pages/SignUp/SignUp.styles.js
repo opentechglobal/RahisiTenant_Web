@@ -39,7 +39,7 @@ const SignUpStyleWrapper = styled.div`
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 70px 50px;
+    padding: 120px 50px;
     position: relative;
     background-color: #ffffff;
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ import Auth0 from "../../../authentication/Auth0";
 import IntlMessages from "../../../components/utility/intlMessages";
 import SignUpStyleWrapper from "../styled/SignUp.styles";
 import Head from "next/head";
+import Select, { SelectOption } from "../../../components/uielements/select";
 
 const { login } = authAction;
 const { clearMenu } = appActions;
@@ -20,15 +21,24 @@ function SignUp() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleLogin = (token = false) => {
-    console.log(token, "handlelogin");
-    if (token) {
-      dispatch(login(token));
-    } else {
-      dispatch(login());
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+
+  const handleSignUp = () => {
+
+    let fields = ['firstName', 'lastName', 'emailAddress', 'phoneNumber']
+    if (firstName === "") {
+      document.getElementById("firstName").classList.add("required");
     }
-    dispatch(clearMenu());
-    history.push("/dashboard");
+    // console.log(token, "handlelogin");
+    // if (token) {
+    //   dispatch(login(token));
+    // } else {
+    //   dispatch(login());
+    // }
+    // dispatch(clearMenu());
+    // history.push("/dashboard");
   };
 
   return (
@@ -46,46 +56,50 @@ function SignUp() {
           </div>
 
           <div className="isoSignUpForm">
-            <div className="isoInputWrapper isoLeftRightComponent">
-              <Input size="large" placeholder="First name" />
-            </div>
-
             <div className="isoInputWrapper">
-              <Input size="large" placeholder="Last Name" />
-            </div>
-
-            <div className="isoInputWrapper">
-              <Input size="large" placeholder="Username" />
-            </div>
-
-            <div className="isoInputWrapper">
-              <Input size="large" placeholder="Email" />
-            </div>
-
-            <div className="isoInputWrapper">
-              <Input size="large" type="password" placeholder="Password" />
+              <Input
+                size="large"
+                placeholder="First name"
+                id="firstName"
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+              />
             </div>
 
             <div className="isoInputWrapper">
               <Input
                 size="large"
-                type="password"
-                placeholder="Confirm Password"
+                placeholder="Last Name"
+                id="lastName"
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
               />
             </div>
 
-            <div className="isoInputWrapper" style={{ marginBottom: "50px" }}>
+            <div className="isoInputWrapper">
+              <Input
+                size="large"
+                placeholder="Email"
+                type="email"
+                id="emailAddress"
+                value={emailAddress}
+                onChange={(event) => setEmailAddress(event.target.value)}
+              />
+            </div>
+
+            <div
+              className="isoInputWrapper"
+              style={{ marginBottom: "25px", marginTop: "25px" }}
+            >
               <Checkbox>
                 <IntlMessages id="page.signUpTermsConditions" />
               </Checkbox>
             </div>
 
             <div className="isoInputWrapper">
-              <Link href="/app/dashboard">
-                <Button type="primary">
-                  <IntlMessages id="page.signUpButton" />
-                </Button>
-              </Link>
+              <Button type="primary" onClick={() => handleSignUp()}>
+                <IntlMessages id="page.signUpButton" />
+              </Button>
             </div>
             {/* <div className="isoInputWrapper isoOtherLogin">
               {/* <Button
